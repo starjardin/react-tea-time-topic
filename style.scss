@@ -1,0 +1,21 @@
+.next-topic-container,
+.prev-topic-container {
+  margin-top: 4rem;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.next-topic, 
+.prev-topic {
+  background-color: #cccccc;
+  padding: 1rem;
+  margin-block : 1rem;
+}
+
+.next-topic > .row,
+.prev-topic > .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
