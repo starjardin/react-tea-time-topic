@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ArchiveButton from './ArchiveButton'
 
-export default function NextTopics ({ 
-  topic, 
-  likeTopic,
-  unLikeTopic,
-  setLikeTopic,
-  setUnLikeTopic }) {
+export default function NextTopics ({ topic}) {
+
+  const [likeTopic, setLikeTopic] = useState(0)
+  const [unLikeTopic, setUnLikeTopic] = useState(0)
+
   function increment () {
     setLikeTopic(prev => prev + 1)
   }

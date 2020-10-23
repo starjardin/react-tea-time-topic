@@ -9,8 +9,6 @@ export default function App () {
   const [topics, setTopics] = useState([])
   const [newTopics, setNewTopics] = useState([])
   const [prevTopics, setPrevTopics] = useState([])
-  const [likeTopic, setLikeTopic] = useState(0)
-  const [unLikeTopic, setUnLikeTopic] = useState(0)
 
   const getTopics = async () => {
     const res = await fetch(dataUrl)
@@ -40,10 +38,6 @@ export default function App () {
           <NextTopics 
             key={topic.id} 
             topic={topic}
-            likeTopic={likeTopic}
-            unLikeTopic={unLikeTopic}
-            setLikeTopic={setLikeTopic}
-            setUnLikeTopic={setUnLikeTopic}
           />
         )
         })}

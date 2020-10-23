@@ -29848,19 +29848,22 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = NextTopics;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _ArchiveButton = _interopRequireDefault(require("./ArchiveButton"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function NextTopics({
-  topic,
-  likeTopic,
-  unLikeTopic,
-  setLikeTopic,
-  setUnLikeTopic
+  topic
 }) {
+  const [likeTopic, setLikeTopic] = (0, _react.useState)(0);
+  const [unLikeTopic, setUnLikeTopic] = (0, _react.useState)(0);
+
   function increment() {
     setLikeTopic(prev => prev + 1);
   }
@@ -29907,8 +29910,6 @@ function App() {
   const [topics, setTopics] = (0, _react.useState)([]);
   const [newTopics, setNewTopics] = (0, _react.useState)([]);
   const [prevTopics, setPrevTopics] = (0, _react.useState)([]);
-  const [likeTopic, setLikeTopic] = (0, _react.useState)(0);
-  const [unLikeTopic, setUnLikeTopic] = (0, _react.useState)(0);
 
   const getTopics = async () => {
     const res = await fetch(dataUrl);
@@ -29930,11 +29931,7 @@ function App() {
   }, /*#__PURE__*/_react.default.createElement("h3", null, "Next Topics"), newTopics.map(topic => {
     return /*#__PURE__*/_react.default.createElement(_NextTopics.default, {
       key: topic.id,
-      topic: topic,
-      likeTopic: likeTopic,
-      unLikeTopic: unLikeTopic,
-      setLikeTopic: setLikeTopic,
-      setUnLikeTopic: setUnLikeTopic
+      topic: topic
     });
   })), /*#__PURE__*/_react.default.createElement("div", {
     className: "prev-topic-container"
@@ -29985,7 +29982,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60174" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63974" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
