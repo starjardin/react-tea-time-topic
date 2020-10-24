@@ -29772,7 +29772,17 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"components/Header.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"components/Url.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+const dataUrl = 'https://gist.githubusercontent.com/Pinois/93afbc4a061352a0c70331ca4a16bb99/raw/6da767327041de13693181c2cb09459b0a3657a1/topics.json';
+var _default = dataUrl;
+exports.default = _default;
+},{}],"components/Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29799,8 +29809,22 @@ var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function DeleteButton() {
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", null, "Delete"));
+function DeleteButton({
+  // destructuring objects i.e. topic= topic.topic
+  topic,
+  prevTopics,
+  setPrevTopics
+}) {
+  //This is the id of the element to delete
+  const id = topic.id; //function to delete an item (a topic)
+
+  function deleted() {
+    setPrevTopics(prevTopics.filter(prevTopic => prevTopic.id !== id));
+  }
+
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: deleted
+  }, "Delete"));
 }
 },{"react":"node_modules/react/index.js"}],"components/PrevTopics.js":[function(require,module,exports) {
 "use strict";
@@ -29817,13 +29841,19 @@ var _DeleteButton = _interopRequireDefault(require("./DeleteButton"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function PrevTopics({
-  topic
+  topic,
+  prevTopics,
+  setPrevTopics
 }) {
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
     className: "prev-topic"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "row"
-  }, /*#__PURE__*/_react.default.createElement("p", null, topic.title), /*#__PURE__*/_react.default.createElement(_DeleteButton.default, null))));
+  }, /*#__PURE__*/_react.default.createElement("p", null, topic.title), /*#__PURE__*/_react.default.createElement(_DeleteButton.default, {
+    topic: topic,
+    prevTopics: prevTopics,
+    setPrevTopics: setPrevTopics
+  }))));
 }
 },{"react":"node_modules/react/index.js","./DeleteButton":"components/DeleteButton.js"}],"components/ArchiveButton.js":[function(require,module,exports) {
 "use strict";
@@ -29837,8 +29867,19 @@ var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ArchiveButton() {
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", null, "Archive"));
+function ArchiveButton({
+  topic,
+  topics,
+  setTopics
+}) {
+  function archived() {
+    topic.discussedOn = Date.now();
+    setTopics([...topics]);
+  }
+
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: archived
+  }, "Archive"));
 }
 },{"react":"node_modules/react/index.js"}],"components/NextTopics.js":[function(require,module,exports) {
 "use strict";
@@ -29859,30 +29900,74 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function NextTopics({
-  topic
+  topic,
+  topics,
+  setTopics
 }) {
-  const [likeTopic, setLikeTopic] = (0, _react.useState)(0);
-  const [unLikeTopic, setUnLikeTopic] = (0, _react.useState)(0);
-
-  function increment() {
-    setLikeTopic(prev => prev + 1);
+  function upvotesIncrement() {
+    topic.upvotes++;
+    setTopics([...topics]);
   }
 
-  function decrement() {
-    setUnLikeTopic(prev => prev + 1);
+  function downvotesDecrement() {
+    topic.downvotes++;
+    setTopics([...topics]);
   }
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
     className: "next-topic"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "row"
-  }, /*#__PURE__*/_react.default.createElement("p", null, topic.title), /*#__PURE__*/_react.default.createElement(_ArchiveButton.default, null)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: increment
-  }, "+\uD83D\uDC4D"), /*#__PURE__*/_react.default.createElement("span", null, likeTopic), /*#__PURE__*/_react.default.createElement("button", {
-    onClick: decrement
-  }, "-\uD83D\uDC4E"), /*#__PURE__*/_react.default.createElement("span", null, unLikeTopic))));
+  }, /*#__PURE__*/_react.default.createElement("p", null, topic.title), /*#__PURE__*/_react.default.createElement(_ArchiveButton.default, {
+    topic: topic,
+    topics: topics,
+    setTopics: setTopics
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: upvotesIncrement
+  }, "+\uD83D\uDC4D"), /*#__PURE__*/_react.default.createElement("span", null, topic.upvotes), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: downvotesDecrement
+  }, "-\uD83D\uDC4E"), /*#__PURE__*/_react.default.createElement("span", null, topic.downvotes))));
 }
-},{"react":"node_modules/react/index.js","./ArchiveButton":"components/ArchiveButton.js"}],"components/App.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./ArchiveButton":"components/ArchiveButton.js"}],"components/FormTopics.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = FormTopics;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function FormTopics({
+  topics,
+  setTopics
+}) {
+  function handleChange(e) {
+    e.preventDefault(); //create a new object for the new topics
+
+    const newTopics = {
+      discussedOn: "",
+      downvotes: 0,
+      id: Date.now(),
+      title: e.target.input.value,
+      upvotes: 0
+    }; //add the new topics to the main array
+
+    setTopics([...topics, newTopics]); //reset the form
+
+    e.currentTarget.reset();
+  }
+
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: handleChange
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    type: "text",
+    name: "input"
+  }), /*#__PURE__*/_react.default.createElement("button", null, "Submit")));
+}
+},{"react":"node_modules/react/index.js"}],"components/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29892,11 +29977,15 @@ exports.default = App;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _Url = _interopRequireDefault(require("./Url"));
+
 var _Header = _interopRequireDefault(require("./Header"));
 
 var _PrevTopics = _interopRequireDefault(require("./PrevTopics"));
 
 var _NextTopics = _interopRequireDefault(require("./NextTopics"));
+
+var _FormTopics = _interopRequireDefault(require("./FormTopics"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29904,45 +29993,60 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-const dataUrl = 'https://gist.githubusercontent.com/Pinois/93afbc4a061352a0c70331ca4a16bb99/raw/6da767327041de13693181c2cb09459b0a3657a1/topics.json';
-
 function App() {
-  const [topics, setTopics] = (0, _react.useState)([]);
-  const [newTopics, setNewTopics] = (0, _react.useState)([]);
-  const [prevTopics, setPrevTopics] = (0, _react.useState)([]);
+  //State for the main array, start it with an empty array
+  const [topics, setTopics] = (0, _react.useState)([]); //state for the new topics, start with an empty array
+
+  const [newTopics, setNewTopics] = (0, _react.useState)([]); //state for the past topics, start with an empty array
+
+  const [prevTopics, setPrevTopics] = (0, _react.useState)([]); //fetching topics
 
   const getTopics = async () => {
-    const res = await fetch(dataUrl);
+    const res = await fetch(_Url.default);
     const data = await res.json();
     setTopics(data);
-  };
+  }; //use useEffect to fetch topic
+
 
   (0, _react.useEffect)(() => {
     getTopics();
-  }, []);
+  }, []); //set the new topics depending on what their discussedOn property is.
+
   (0, _react.useEffect)(() => {
     setNewTopics(topics.filter(topics => topics.discussedOn === ""));
-  }, [topics]);
+  }, [topics]); //set the past topics depending on what their discussedOn property is.
+
   (0, _react.useEffect)(() => {
     setPrevTopics(topics.filter(topics => topics.discussedOn !== ""));
   }, [topics]);
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_FormTopics.default, {
+    topics: topics,
+    setTopics: setTopics
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: "next-topic-container"
-  }, /*#__PURE__*/_react.default.createElement("h3", null, "Next Topics"), newTopics.map(topic => {
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "Next Topics"), newTopics.sort((a, b) => {
+    const ratioA = a.upvotes - a.downvotes;
+    const ratioB = b.upvotes - b.downvotes;
+    return ratioB - ratioA;
+  }).map(topic => {
     return /*#__PURE__*/_react.default.createElement(_NextTopics.default, {
       key: topic.id,
-      topic: topic
+      topic: topic,
+      topics: topics,
+      setTopics: setTopics
     });
   })), /*#__PURE__*/_react.default.createElement("div", {
     className: "prev-topic-container"
   }, /*#__PURE__*/_react.default.createElement("h3", null, "Past Topics"), prevTopics.map(topic => {
     return /*#__PURE__*/_react.default.createElement(_PrevTopics.default, {
       key: topic.id,
-      topic: topic
+      topic: topic,
+      prevTopics: prevTopics,
+      setPrevTopics: setPrevTopics
     });
   })));
 }
-},{"react":"node_modules/react/index.js","./Header":"components/Header.js","./PrevTopics":"components/PrevTopics.js","./NextTopics":"components/NextTopics.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./Url":"components/Url.js","./Header":"components/Header.js","./PrevTopics":"components/PrevTopics.js","./NextTopics":"components/NextTopics.js","./FormTopics":"components/FormTopics.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -29982,7 +30086,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63974" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64935" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
