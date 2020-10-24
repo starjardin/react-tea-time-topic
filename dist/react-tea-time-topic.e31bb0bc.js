@@ -29823,8 +29823,11 @@ function DeleteButton({
   }
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: deleted
-  }, "Delete"));
+    className: "delete",
+    onClick: deleted,
+    role: "button",
+    "aria-label": "delete ".concat(topic.title)
+  }));
 }
 },{"react":"node_modules/react/index.js"}],"components/PrevTopics.js":[function(require,module,exports) {
 "use strict";
@@ -29845,6 +29848,7 @@ function PrevTopics({
   prevTopics,
   setPrevTopics
 }) {
+  const date = new Date(Number(topic.discussedOn));
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
     className: "prev-topic"
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -29853,7 +29857,7 @@ function PrevTopics({
     topic: topic,
     prevTopics: prevTopics,
     setPrevTopics: setPrevTopics
-  }))));
+  })), /*#__PURE__*/_react.default.createElement("p", null, " Discussed on ", date.toLocaleDateString())));
 }
 },{"react":"node_modules/react/index.js","./DeleteButton":"components/DeleteButton.js"}],"components/ArchiveButton.js":[function(require,module,exports) {
 "use strict";
@@ -29878,8 +29882,11 @@ function ArchiveButton({
   }
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: archived
-  }, "Archive"));
+    className: "archive",
+    onClick: archived,
+    role: "button",
+    "aria-label": "archive ".concat(topic.title)
+  }));
 }
 },{"react":"node_modules/react/index.js"}],"components/NextTopics.js":[function(require,module,exports) {
 "use strict";
@@ -29922,11 +29929,21 @@ function NextTopics({
     topic: topic,
     topics: topics,
     setTopics: setTopics
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-    onClick: upvotesIncrement
-  }, "+\uD83D\uDC4D"), /*#__PURE__*/_react.default.createElement("span", null, topic.upvotes), /*#__PURE__*/_react.default.createElement("button", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "button--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "button--container"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "thumbup",
+    onClick: upvotesIncrement,
+    role: "button",
+    "aria-label": "upvotes ".concat(topic.title)
+  }), /*#__PURE__*/_react.default.createElement("span", null, topic.upvotes), /*#__PURE__*/_react.default.createElement("button", {
+    className: "thumbdown",
+    role: "button",
+    "aria-label": "downvotes ".concat(topic.title),
     onClick: downvotesDecrement
-  }, "-\uD83D\uDC4E"), /*#__PURE__*/_react.default.createElement("span", null, topic.downvotes))));
+  }), /*#__PURE__*/_react.default.createElement("span", null, topic.downvotes)))));
 }
 },{"react":"node_modules/react/index.js","./ArchiveButton":"components/ArchiveButton.js"}],"components/FormTopics.js":[function(require,module,exports) {
 "use strict";
@@ -29962,7 +29979,11 @@ function FormTopics({
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: handleChange
-  }, /*#__PURE__*/_react.default.createElement("input", {
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "add"
+  }, "Add new Topics"), /*#__PURE__*/_react.default.createElement("input", {
+    placeholder: "add new topic",
+    id: "add",
     type: "text",
     name: "input"
   }), /*#__PURE__*/_react.default.createElement("button", null, "Submit")));

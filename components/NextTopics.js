@@ -29,11 +29,21 @@ export default function NextTopics ({
             setTopics={setTopics}
           />
         </div>
-        <div>
-          <button onClick={upvotesIncrement}>+👍</button>
-          <span>{topic.upvotes}</span>
-          <button onClick={downvotesDecrement}>-👎</button>
-          <span>{topic.downvotes}</span>
+        <div className="button--wrapper">
+          <div className="button--container">
+            <button className="thumbup"
+              onClick={upvotesIncrement}
+              role="button"
+              aria-label={`upvotes ${topic.title}`}
+            ></button>
+            <span>{topic.upvotes}</span>
+            <button className="thumbdown"
+              role="button"
+              aria-label={`downvotes ${topic.title}`}
+              onClick={downvotesDecrement}
+            ></button>
+            <span>{topic.downvotes}</span>
+          </div>
         </div>
       </div>
     </>

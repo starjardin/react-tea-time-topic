@@ -13,9 +13,11 @@ function archived () {
 
   return (
     <>
-      <button
+      <button className="archive"
         onClick={archived}
-      >Archive</button>
+        role='button'
+        aria-label={`archive ${topic.title}`}
+      ></button>
     </>
   )
 }

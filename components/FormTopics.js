@@ -21,7 +21,10 @@ export default function FormTopics ({ topics, setTopics }) {
   return (
     <>
       <form onSubmit={handleChange}>
+        <label htmlFor="add">Add new Topics</label>
         <input 
+          placeholder="add new topic"
+          id="add"
           type="text"
           name="input"
         />

@@ -16,9 +16,11 @@ const id = topic.id
   }
   return (
     <>
-      <button
+      <button className="delete"
         onClick={deleted}
-      >Delete</button>
+        role="button"
+        aria-label={`delete ${topic.title}`}
+      ></button>
     </>
   )
 }

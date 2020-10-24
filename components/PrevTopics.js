@@ -6,6 +6,7 @@ export default function PrevTopics ({
   prevTopics,
   setPrevTopics
   }) {
+  const date = new Date(Number(topic.discussedOn))
   return (
     <>
       <div className="prev-topic">
@@ -17,6 +18,7 @@ export default function PrevTopics ({
             setPrevTopics={setPrevTopics} 
           />
         </div>
+        <p> Discussed on {date.toLocaleDateString()}</p>
       </div>
     </>
   )
