@@ -1,10 +1,21 @@
 import React from 'react'
 
 
-export default function ArchiveButton () {
+export default function ArchiveButton ( { 
+  topic,
+  topics,
+  setTopics
+  } ) {
+function archived () {
+  topic.discussedOn = Date.now();
+  setTopics([...topics])
+}
+
   return (
     <>
-      <button>Archive</button>
+      <button
+        onClick={archived}
+      >Archive</button>
     </>
   )
 }
