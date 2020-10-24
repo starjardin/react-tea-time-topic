@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ArchiveButton from './ArchiveButton'
 
 export default function NextTopics ({ 
   topic,
   topics,
-  setTopics
+  setTopics,
+  newTopics,
+  setNewTopics,
   }) {
 
 
   function upvotesIncrement () {
     topic.upvotes ++
-    setTopics([...topics])
+    setNewTopics([...newTopics])
   }
   
   function downvotesDecrement () {
     topic.downvotes ++
-    setTopics([...topics])
+    setNewTopics([...newTopics])
   }
 
   return  (

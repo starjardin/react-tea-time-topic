@@ -54,6 +54,8 @@ export default function App () {
             topic={topic}
             topics={topics}
             setTopics={setTopics}
+            newTopics={newTopics}
+            setNewTopics={setNewTopics}
           />
         )
         })}
